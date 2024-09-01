@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/Header";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,16 +17,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <ClerkProvider>
+
+    
     <html lang="en">
      
-      <body className={inter.className}>{children}
+      <body className= 'min-h-screen flex flex-col'>
   
       {/*Toaster */}
 
 
-     <header>{/*header*/}</header>
+     <header className="border-b top-0 bg-white sticky z-50">
+      <Header/>
+     </header>
     
-      <div>
+      <div className="bg-[#F4F2ED] flex-1 w-full ">
         <main>{children}</main>
       </div>
       
@@ -32,6 +39,6 @@ export default function RootLayout({
       </body>
 
     </html>
-
+    </ClerkProvider>
   );
 }

@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .icon {
+    @apply flex flex-col items-center justify-center text-sm font-light text-gray-500 ;
+  }
+
+  .icon svg {
+    @apply fill-gray-500 hover:fill-black stroke-none;
+  }
+  
+  .icon p {
+    @apply text-gray-400 text-xs
+  }
+ 
+
+  
+}
+
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
