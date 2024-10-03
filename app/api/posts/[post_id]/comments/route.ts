@@ -1,5 +1,7 @@
 import connectDB from "@/Mongodb/db";
 import { Post } from "@/Mongodb/models/Post";
+import { ICommentBase } from "@/types/Comment";
+import { IUser } from "@/types/User";
 import { auth } from "@clerk/nextjs/server";
 import { error } from "console";
 import {NextResponse} from "next/server";
@@ -17,19 +19,20 @@ export async function GET(
         if(!post){
             return NextResponse.json({error: "Post not found!!!"}, {status:404});
         }
-        const likes = post.likes;
-        return NextResponse.json(likes); 
+        const comments = post.getAllComments();
+        return NextResponse.json(comments); 
     } catch (error) {
         return NextResponse.json(
-            {error: "Error occured when fetching likes!!!"},
+            {error: "Error occured when fetching comments!!!"},
             {status: 500}
         );
     }   
 }
 
 
-export interface LikePostRequestBody { 
-    userId: string;
+export interface AddCommentRequestBody { 
+    user: IUser;
+    text: string;
 }
 
 export async function POST(
@@ -40,7 +43,7 @@ export async function POST(
  auth().protect();
  await connectDB();
 
- const {userId} : LikePostRequestBody = await request.json();
+ const {user,text} : AddCommentRequestBody = await request.json();
 
  try {
     const post = await Post.findById(params.post_id);
@@ -48,13 +51,18 @@ export async function POST(
     if(!post){
         return NextResponse.json({error: "Post not found!!!"}, {status:404});
     }
-    
-    await post.likePost(userId);
-    return NextResponse.json({message:"Post liked."})
+
+    const comment: ICommentBase = {
+        user,
+        text,
+    }
+
+    await post.commentOnPost(comment);
+    return NextResponse.json({message:"Comment Added."})
 
     } catch (error) {
     return NextResponse.json(
-        {error: "Error liking the post!!!"},
+        {error: "Error commenting on the post!!!"},
         {status: 500} 
     );
     }

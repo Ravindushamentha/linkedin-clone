@@ -12,8 +12,14 @@ const nextConfig = {
           }, 
           {
             protocol: 'https',
-            hostname: 'linkedinclone.blog.core.windows.net',
+            hostname: 'linkedinclone.blob.core.windows.net',
           },
+          {
+            protocol: 'https',
+            hostname: 'linkedinclone1.blob.core.windows.net',
+            pathname: '/**',
+          },
+
         ],
       },
 };

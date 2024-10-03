@@ -22,7 +22,7 @@ export async function POST(
             return NextResponse.json({error: "Post not found!!!"}, {status:404});
         }
         
-         await post.unLikePost(userId);
+         await post.unlikePost(userId);
          return NextResponse.json({message:"Post unliked."})
     } catch (error) {
         return NextResponse.json(

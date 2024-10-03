@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@azure/storage-blob": "^12.24.0",
     "@clerk/nextjs": "^5.3.7",
     "@radix-ui/react-avatar": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.0",
@@ -16,9 +17,10 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.436.0",
     "mongoose": "^8.6.1",
-    "next": "14.2.7",
+    "next": "^14.2.13",
     "react": "^18",
     "react-dom": "^18",
+    "react-timeago": "^7.2.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7"
   },
@@ -26,6 +28,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-timeago": "^4.1.7",
     "eslint": "^8",
     "eslint-config-next": "14.2.7",
     "postcss": "^8",
