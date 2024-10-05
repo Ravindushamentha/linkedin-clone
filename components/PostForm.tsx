@@ -6,6 +6,7 @@ import { Button } from './ui/button';
 import { ImageIcon, XIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
 import createPostAction from '@/actions/createPostAction';
+import { toast } from 'sonner';
 
 function PostForm() {
   const ref = useRef<HTMLFormElement>(null);
@@ -50,7 +51,15 @@ function PostForm() {
         onSubmit={async (e) => {
           e.preventDefault();
           const formData = new FormData(ref.current!);
-          await handlePostAction(formData);
+         const promise = handlePostAction(formData);
+
+         //toast notification
+          toast.promise(promise , {
+            loading: "creating post...",
+            success: "Post created",
+            error : "Failed creating the post!"
+          });
+
         }}
         className='p-2 border bg-white rounded-r-lg'
       >
@@ -70,6 +79,7 @@ function PostForm() {
           />
 
           <input
+            
             ref={fileInputRef}
             hidden
             type='file'
@@ -93,7 +103,7 @@ function PostForm() {
         )}
 
         <div className='flex mt-2 justify-end space-x-2'>
-          <Button type='button' onClick={() => fileInputRef.current?.click()}>
+          <Button type='button' variant="secondary" onClick={() => fileInputRef.current?.click()}>
             <ImageIcon className='mr-2' color='currentcolor' size={16}/>
             {preview ? "Change" : "Add"} image
           </Button>

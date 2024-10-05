@@ -8,7 +8,7 @@
   }
 
   .icon svg {
-    @apply fill-gray-500 hover:fill-black stroke-none;
+    @apply fill-gray-300 hover:fill-gray-700 stroke-none;
   }
   
   .icon p {

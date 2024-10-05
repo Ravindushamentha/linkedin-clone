@@ -3,17 +3,29 @@ import React from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { SignedIn, SignedOut, SignIn, SignInButton } from '@clerk/nextjs';
 import { Button } from './ui/button';
+import { IPostDocument } from '@/Mongodb/models/Post';
 
- async function UserInformation() {
+ async function UserInformation( {posts}: {posts: IPostDocument[] })   {
+
     const user= await currentUser();
+
+    const userPosts = posts?.filter((post) => post.user.userId == user?.id) || [] ;
+
+     const userComments = posts.flatMap(
+        (post) => 
+            post?.comments?.filter((comment) => comment.user.userId === user?.id) || []
+    );
+    
   return (
     <div className='items-center justify-center flex flex-col bg-white mr-6 rounded-lg border py-4 '>
-        <Avatar>
-            <AvatarImage src={user?.imageUrl }  />
-            <AvatarFallback>{user?.firstName?.charAt(0)} {user?.lastName?.charAt(0)}</AvatarFallback>
-        </Avatar>
+        
 
         <SignedIn>
+                <Avatar>
+                    <AvatarImage src={user?.imageUrl }  />
+                    <AvatarFallback>{user?.firstName?.charAt(0)} {user?.lastName?.charAt(0)}</AvatarFallback>
+                </Avatar>
+
              <div className='text-center'>
                 <p className='font-semibold'>
                     {user?.firstName}{user?.lastName}
@@ -36,17 +48,22 @@ import { Button } from './ui/button';
             </Button>
             </div> 
         </SignedOut>
-        <hr className='w-full border-gray-200 my-5'/>
+        
 
-        <div className='flex justify-between w-full px-4 text-sm'>
+        <SignedIn>
+                <hr className='w-full border-gray-200 my-5'/>
+
+            <div className='flex justify-between w-full px-4 text-sm'>
             <p className='font-semibold text-gray-400'>Posts</p>
-            <p className='text-blue-400'>0</p>
+            <p className='text-blue-400'>{userPosts.length}</p>
         </div>
 
         <div className='flex justify-between w-full px-4 text-sm'>
             <p className='font-semibold text-gray-400'>Comments</p>
-            <p className='text-blue-400'>0</p>
+            <p className='text-blue-400'>{userComments.length}</p>
         </div>
+        </SignedIn>
+        
     </div>
   )
 }

@@ -11,6 +11,7 @@ import deletePostAction from '@/actions/deletePostAction';
 import Image from 'next/image';
 import { revalidatePath } from 'next/cache';
 import PostOptions from './PostOptions';
+import { toast } from 'sonner';
 
 
 
@@ -62,6 +63,12 @@ function Post({post}: {post: IPostDocument}) {
                 const promise = deletePostAction(post._id);
                
                 //toast
+                //toast notification
+          toast.promise(promise , {
+            loading: "deleting the post...",
+            success: "Post deleted",
+            error : "Failed deleting the post!"
+          });
               }}>
                   <Trash2 />
               </Button>

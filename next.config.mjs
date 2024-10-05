@@ -19,7 +19,10 @@ const nextConfig = {
             hostname: 'linkedinclone1.blob.core.windows.net',
             pathname: '/**',
           },
-
+          {
+            protocol: 'https',
+            hostname: 'linkedin.com',
+          },
         ],
       },
 };

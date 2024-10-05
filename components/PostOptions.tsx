@@ -10,6 +10,7 @@ import { LikePostRequestBody } from "@/app/api/posts/[post_id]/like/route";
 import { UnlikePostRequestBody } from "@/app/api/posts/[post_id]/unlike/route";
 import CommentFeed from "./CommentFeed";
 import CommentForm from "./CommentForm";
+import { toast } from "sonner";
 
 function PostOptions({post}: { post: IPostDocument;}) {
   const [isCommentsOpen, setIsCommentsOpen] = useState(false);
@@ -58,6 +59,7 @@ function PostOptions({post}: { post: IPostDocument;}) {
     if (!response.ok) {
       setLiked(originalLiked);
       setLikes(originalLikes);
+      //toast.error("Failed to like/unlike")
       throw new Error("Failed to like post");
     }
 
@@ -100,7 +102,16 @@ function PostOptions({post}: { post: IPostDocument;}) {
         <Button
           variant="ghost"
           className="postButton"
-          onClick={likeOrUnlikePost}
+          onClick={() => {
+           const promise = likeOrUnlikePost()
+
+           //toast
+           toast.promise(promise , {
+            loading: liked ? "Unliking..." : "Liking...",
+            success: liked ? "Unliked" : "Liked",
+            error : liked ? "Failed to Unlike" : "Failed to Like",
+          });
+          } }
         >
           {/* If user has liked the post, show filled thumbs up icon */}
           <ThumbsUpIcon
