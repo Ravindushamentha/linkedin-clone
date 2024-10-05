@@ -85,7 +85,7 @@ function Post({post}: {post: IPostDocument}) {
             {/**if there is image for the post */}
             {post.imageUrl && (
               <Image
-              src={post.imageUrl}
+              src={String(post.imageUrl)}
               alt='Post image'
               width={500}
               height={500}
