@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import createCommentAction from "@/actions/createCommentAction";
 import { toast } from "sonner";
 
-function CommentForm({postId}: {postId: string}) {
+function CommentForm({postId}: {postId: any}) {
 
   const{user}  = useUser();
   const ref = useRef<HTMLFormElement>(null);
