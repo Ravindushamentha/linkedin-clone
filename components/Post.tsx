@@ -60,7 +60,8 @@ function Post({post}: {post: IPostDocument}) {
             {isAuthor && (
               <Button variant='outline'
               onClick={() => {
-                const promise = deletePostAction(post._id);
+                const promise = deletePostAction(String(post._id));
+
                
                 //toast
                 //toast notification
